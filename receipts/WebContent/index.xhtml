@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Arcus - Rezepte</title>
+</h:head>
+<h:body>
+	<h:form id="createReceiptForm">
+		<h:panelGroup id="basicReceiptPanel">
+			<h1>Rezept erstellen</h1>
+			<p:panelGrid columns="3">
+				<p:outputLabel value="Rezeptname:" for="receiptName" />
+				<p:inputText id="receiptName" value="#{receiptController.receipt.receiptName}" required="true"
+					requiredMessage="Bitte geben Sie einen Rezeptnamen ein!" />
+				<p:message for="receiptName" display="text" />
+
+				<p:outputLabel value="Art:" for="menuType" />
+				<p:selectOneMenu id="menuType" value="#{receiptController.receipt.menuType}" required="true">
+					<f:selectItems value="#{receiptController.menuTypes}" />
+				</p:selectOneMenu>
+				<p:message for="menuType" />
+
+				<p:outputLabel value="Vitalmenü:" for="vitalMenu" />
+				<p:selectBooleanCheckbox id="vitalMenu" value="#{receiptController.receipt.vitalMenu}" />
+				<p:message for="vitalMenu" />
+			</p:panelGrid>
+		</h:panelGroup>
+		
+		<h:panelGroup id="ingredientsPanel">
+			<h3>Zutaten (pro Portion)</h3>
+			<p:panelGrid id="ingredientInput" columns="4">
+				<p:outputLabel value="Menge" />
+				<p:outputLabel value="Einheit" />
+				<p:outputLabel value="Zutat" />
+				<p:outputLabel value="" />
+				<p:inputText id="quantity" value="#{receiptController.ingredient.quantity}" validator="emptyFieldValidator"
+					validatorMessage="Bitte geben Sie eine Menge ein!" />
+				<p:inputText id="unit" value="#{receiptController.ingredient.unit}" validator="emptyFieldValidator"
+					validatorMessage="Bitte geben Sie eine Einheit ein!" />
+				<p:inputText id="ingredientName" value="#{receiptController.ingredient.ingredientName}" validator="emptyFieldValidator"
+					validatorMessage="Bitte geben Sie einen Namen für die Zutat ein!" />
+				<p:commandButton value="Hinzufügen" actionListener="#{receiptController.addIngredient()}" process="ingredientInput"
+					update="ingredientInput ingredientTable ingredientInputValidationMessages" />
+			</p:panelGrid>
+
+			<h:panelGroup id="ingredientInputValidationMessages">
+				<p:message for="quantity" display="text" />
+				<p:message for="unit" display="text" />
+				<p:message for="ingredientName" display="text" />
+			</h:panelGroup>
+
+			<p:dataTable id="ingredientTable" var="ingredient" value="#{receiptController.receipt.ingredients}" emptyMessage="Kein Zutaten angegeben">
+				<p:column headerText="Menge">
+					<h:outputText value="#{ingredient.quantity}" />
+				</p:column>
+
+				<p:column headerText="Einheit">
+					<h:outputText value="#{ingredient.unit}" />
+				</p:column>
+
+				<p:column headerText="Zutat">
+					<h:outputText value="#{ingredient.ingredientName}" />
+				</p:column>
+				<p:column>
+					<p:commandButton icon="ui-icon-trash" actionListener="#{receiptController.removeIngredient(ingredient)}" process="ingredientTable"
+						update="ingredientTable" />
+				</p:column>
+			</p:dataTable>
+		</h:panelGroup>
+		
+		<h:panelGroup id="allergensPanel">
+			<h3>Allergene</h3>
+		</h:panelGroup>
+		<p:commandButton value="Speichern" actionListener="#{receiptController.save()}" process="@this basicReceiptPanel" update="createReceiptForm" />
+	</h:form>
+
+</h:body>
+</html>

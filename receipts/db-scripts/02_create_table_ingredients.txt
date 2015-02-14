@@ -1,0 +1,9 @@
+CREATE TABLE Ingredient(
+	id BIGINT IDENTITY,
+	ingredientName VARCHAR(255) NOT NULL,
+	quantity INT NOT NULL,
+	unit VARCHAR(255) NOT NULL,
+	receipt_id BIGINT NOT NULL,
+	CONSTRAINT fk_ingredient_receipt FOREIGN KEY(receipt_id) REFERENCES Receipt(id),
+	PRIMARY KEY(id),
+);

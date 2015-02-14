@@ -1,0 +1,8 @@
+CREATE TABLE Receipt (
+	id BIGINT IDENTITY,
+	receiptName VARCHAR(255) NOT NULL,
+	menuType VARCHAR(255) NOT NULL,
+	vitalMenu BIT NOT NULL,
+	PRIMARY KEY(id),
+	CONSTRAINT uc_receiptName UNIQUE (receiptName)
+);

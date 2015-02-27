@@ -7,20 +7,25 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Receipt extends BaseEntity{
+public class Receipt extends BaseEntity {
 
 	private String receiptName;
 	@Enumerated(EnumType.STRING)
 	private MenuType menuType;
 	private boolean vitalMenu;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "receipt_id", nullable = false)
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "receipt_id", nullable = false)
 	private List<Ingredient> ingredients = new ArrayList<Ingredient>();
-	
+	@OneToMany(fetch=FetchType.EAGER)
+	@JoinTable(name = "Receipt_Allergen", joinColumns = { @JoinColumn(name = "receipt_id") }, inverseJoinColumns = { @JoinColumn(name = "allergen_id") })
+	private List<Allergen> allergens = new ArrayList<Allergen>();
+
 	public Receipt() {
 	}
 
@@ -54,5 +59,13 @@ public class Receipt extends BaseEntity{
 
 	public void setIngredients(List<Ingredient> ingredients) {
 		this.ingredients = ingredients;
+	}
+
+	public List<Allergen> getAllergens() {
+		return allergens;
+	}
+
+	public void setAllergens(List<Allergen> allergens) {
+		this.allergens = allergens;
 	}
 }

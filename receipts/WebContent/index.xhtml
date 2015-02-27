@@ -26,7 +26,7 @@
 				<p:message for="vitalMenu" />
 			</p:panelGrid>
 		</h:panelGroup>
-		
+
 		<h:panelGroup id="ingredientsPanel">
 			<h3>Zutaten (pro Portion)</h3>
 			<p:panelGrid id="ingredientInput" columns="4">
@@ -68,11 +68,19 @@
 				</p:column>
 			</p:dataTable>
 		</h:panelGroup>
-		
+
 		<h:panelGroup id="allergensPanel">
 			<h3>Allergene</h3>
+			<p:selectManyCheckbox id="grid" value="#{receiptController.receipt.allergens}" layout="grid" columns="2">
+				<f:selectItems value="#{receiptController.allergens}" var="allergen" itemLabel="#{allergen.label}" itemValue="#{allergen.value}" />
+				<f:converter converterId="allergenConverter"></f:converter>
+			</p:selectManyCheckbox>
+
 		</h:panelGroup>
-		<p:commandButton value="Speichern" actionListener="#{receiptController.save()}" process="@this basicReceiptPanel" update="createReceiptForm" />
+		<p:commandButton value="Speichern" actionListener="#{receiptController.save()}" process="@this basicReceiptPanel allergensPanel"
+			update="createReceiptForm"/>
+			
+			<p:message for="grid"></p:message>
 	</h:form>
 
 </h:body>

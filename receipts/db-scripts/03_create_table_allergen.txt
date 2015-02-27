@@ -1,0 +1,28 @@
+CREATE TABLE Allergen (
+	id BIGINT IDENTITY,
+	name VARCHAR(255) NOT NULL,
+	letter VARCHAR(10) NOT NULL,
+	PRIMARY KEY(id)
+);
+
+INSERT INTO Allergen(letter,name) VALUES
+	('A','glutenhaltiges Getreide'),
+	('B','Krebstiere'),
+	('C','Ei'),
+	('D','Fisch'),
+	('E','Erdnuss'),
+	('F','Soja'),
+	('G','Milch oder Laktose'),
+	('H','Schalenfrüchte'),
+	('L','Sellerie'),
+	('M','Senf'),
+	('N','Sesam'),
+	('O','Sulfite'),
+	('P','Lupinen'),
+	('R','Weichtiere');
+
+	
+CREATE TABLE Receipt_Allergen(
+	receipt_id BIGINT NOT NULL,
+	allergen_id BIGINT NOT NULL
+);

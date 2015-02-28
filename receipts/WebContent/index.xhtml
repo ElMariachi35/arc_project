@@ -72,7 +72,7 @@
 		<h:panelGroup id="allergensPanel">
 			<h3>Allergene</h3>
 			<p:selectManyCheckbox id="grid" value="#{receiptController.receipt.allergens}" layout="grid" columns="2">
-				<f:selectItems value="#{receiptController.allergens}" var="allergen" itemLabel="#{allergen.label}" itemValue="#{allergen.value}" />
+				<f:selectItems value="#{receiptController.allergenSelectItems}" var="allergen" itemLabel="#{allergen.label}" itemValue="#{allergen.value}" />
 				<f:converter converterId="allergenConverter"></f:converter>
 			</p:selectManyCheckbox>
 

@@ -30,23 +30,27 @@ public class ReceiptController implements Serializable {
 
 	@PostConstruct
 	public void intializeReceipt() {
-		receipt = new Receipt();
-		ingredient = new Ingredient();
+		initializeReceiptAndIngredient();
 	}
 
 	@Transactional
 	public void save() {
 		receiptService.save(receipt);
+		initializeReceiptAndIngredient();
+	}
+	
+	private void initializeReceiptAndIngredient() {
 		receipt = new Receipt();
+		ingredient = new Ingredient();
 	}
 
 	public void addIngredient() {
-		receipt.getIngredients().add(ingredient);
+		receipt.addIngredient(ingredient);
 		ingredient = new Ingredient();
 	}
 
 	public void removeIngredient(Ingredient ingredientToRemove) {
-		receipt.getIngredients().remove(ingredientToRemove);
+		receipt.removeIngredient(ingredientToRemove);
 	}
 
 	public List<SelectItem> getMenuTypes() {
@@ -57,7 +61,7 @@ public class ReceiptController implements Serializable {
 		return menuTypes;
 	}
 
-	public List<SelectItem> getAllergens() {
+	public List<SelectItem> getAllergenSelectItems() {
 		List<SelectItem> items = new ArrayList<SelectItem>();
 		for (Allergen allergen : allergenService.findAll()) {
 			items.add(createSelectItem(allergen));

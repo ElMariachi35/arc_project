@@ -28,6 +28,14 @@ public class Receipt extends BaseEntity {
 
 	public Receipt() {
 	}
+	
+	public void addIngredient(Ingredient ingredient) {
+		ingredients.add(ingredient);
+	}
+	
+	public void removeIngredient(Ingredient ingredientToRemove) {
+		ingredients.remove(ingredientToRemove);
+	}
 
 	public String getReceiptName() {
 		return receiptName;
